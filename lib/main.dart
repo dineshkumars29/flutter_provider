@@ -31,11 +31,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int counter = 0;
 
-  void _incrementCounter() {
+  void increment() {
     setState(() {
-      _counter++;
+      counter++;
     });
   }
 
@@ -54,17 +54,79 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter',
+              '$counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            CounterA(counter: counter, increment: increment),
+            const SizedBox(
+              height: 20,
+            ),
+            Middle(
+              counter: counter,
+              increment: increment,
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class CounterA extends StatelessWidget {
+  final int counter;
+  final void Function() increment;
+  const CounterA({super.key, required this.counter, required this.increment});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.red,
+      child: Column(children: [
+        Text("$counter"),
+        const SizedBox(
+          height: 20,
+        ),
+        ElevatedButton(onPressed: increment, child: const Text("click here"))
+      ]),
+    );
+  }
+}
+
+class Middle extends StatelessWidget {
+  final int counter;
+  final void Function() increment;
+  const Middle({super.key, required this.counter, required this.increment});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.yellow,
+      child: Column(
+        children: [
+          CounterB(
+            counter: counter,
+          ),
+          const Siblings()
+        ],
+      ),
+    );
+  }
+}
+
+class CounterB extends StatelessWidget {
+  final int counter;
+  const CounterB({super.key, required this.counter});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("$counter");
+  }
+}
+
+class Siblings extends StatelessWidget {
+  const Siblings({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return const Text("Siblings");
   }
 }
