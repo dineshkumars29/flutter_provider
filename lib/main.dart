@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_overview_01/provider_overview/provider_overview_12/show_counter_value.dart';
 
-import 'models/counter.dart';
+import '../../models/counter.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Counter _counter = Counter();
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ChangeNotifierProvider(
-          create: (BuildContext context) => Counter(), child: HomePage()),
+      theme: ThemeData(primarySwatch: Colors.red),
+      // home: ChangeNotifierProvider(
+      //     create: (BuildContext context) => Counter(), child: HomePage()),
+      debugShowCheckedModeBanner: false,
+      routes: {
+        "/": (context) =>
+            ChangeNotifierProvider.value(value: _counter, child: HomePage()),
+        "/counter": (context) =>
+            ChangeNotifierProvider.value(value: _counter, child: ShowCount())
+      },
     );
   }
 }
@@ -34,13 +43,7 @@ class HomePage extends StatelessWidget {
               GestureDetector(
                   child: Text("show count"),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ChangeNotifierProvider.value(
-                              value: context.read<Counter>(),
-                              child: ShowCount()),
-                        ));
+                    Navigator.pushNamed(context, "/counter");
                   }),
               SizedBox(
                 height: 30,
