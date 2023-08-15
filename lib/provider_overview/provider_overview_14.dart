@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_overview_01/provider_overview/provider_overview_01.dart';
 import 'package:provider_overview_01/provider_overview/provider_overview_12/show_counter_value.dart';
 
 import '../../models/counter.dart';
